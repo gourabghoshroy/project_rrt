@@ -1,4 +1,0 @@
-controller_frequency: 3.0
-footprint: [ [0.5, 0.5], [-0.5, 0.5], [-0.5, -0.5], [0.5, -0.5] ]
-#robot_radius: ir_of_robot
-inflation_radius: 0.55
