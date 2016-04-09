@@ -1,0 +1,22 @@
+<launch>
+   <master auto="start"/>
+
+  <!-- Run the map server -->
+  <node name="map_server" pkg="map_server" type="map_server" args="/tmp/my_map.yaml"/>
+  
+  <node pkg="tf" type="static_transform_publisher" name="base_link_map" args="1 0 0 0 0 0 1 base_link map 10" />
+
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find project_rrt)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find project_rrt)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find project_rrt)/config/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find project_rrt)/config/global_costmap_params.yaml" command="load" />
+    <rosparam> 
+      controller_frequency: 3.0
+    </rosparam>
+  </node>
+
+
+  <!-- Turtlebot Driver node -->
+  <node pkg="project_rrt" type="node.py" name="driver" output="screen"/>
+</launch>
