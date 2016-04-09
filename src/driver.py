@@ -16,10 +16,10 @@ class driver(object):
 
     def create_nav_goal(self,x, y, yaw):
         mb_goal = MoveBaseGoal()
-        mb_goal.target_pose.header.frame_id = '/base_link' # Note: the frame_id must be map
+        mb_goal.target_pose.header.frame_id = '/map' 
         mb_goal.target_pose.pose.position.x = x
         mb_goal.target_pose.pose.position.y = y
-        mb_goal.target_pose.pose.position.z = 0.0 # z must be 0.0 (no height in the map)
+        mb_goal.target_pose.pose.position.z = 0.0 
     
         # Orientation of the robot is expressed in the yaw value of euler angles
         angle = radians(yaw) # angles are expressed in radians
@@ -37,13 +37,13 @@ class driver(object):
         rospy.loginfo("Connected.")
     
         rospy.loginfo("Creating navigation goal...")
-        nav_goal = self.create_nav_goal(1.0, 0.0, 0.0)#4.72333594438, -0.377168390489, 45) # 3.925197124481201, -3.026911973953247, 0.6259599924087524 livingroom
-        rospy.loginfo("Sending goal to x=2.0 y=2.0 yaw=90...")
+        nav_goal = self.create_nav_goal(1.0, 0.0, 0.0)
+        rospy.loginfo("Sending goal to x=1.0 y=0.0 yaw=0...")
         nav_as.send_goal(nav_goal)
         rospy.loginfo("Waiting for result...")
         nav_as.wait_for_result()
         nav_res = nav_as.get_result()
         nav_state = nav_as.get_state()
         rospy.loginfo("Done!")
-        print "Result: ", str(nav_res) # always empty, be careful
-        print "Nav state: ", str(nav_state) # use this, 3 is SUCCESS, 4 is ABORTED (couldnt get there), 5 REJECTED (the goal is not attainable)
+        print "Result: ", str(nav_res) 
+        print "Nav state: ", str(nav_state) 
